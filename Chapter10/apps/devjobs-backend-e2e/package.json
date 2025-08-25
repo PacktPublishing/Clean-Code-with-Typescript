@@ -1,0 +1,26 @@
+{
+  "name": "@devjobs/devjobs-backend-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@devjobs/devjobs-backend"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "apps/devjobs-backend-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "@devjobs/devjobs-backend:build",
+          "@devjobs/devjobs-backend:serve"
+        ]
+      }
+    }
+  }
+}

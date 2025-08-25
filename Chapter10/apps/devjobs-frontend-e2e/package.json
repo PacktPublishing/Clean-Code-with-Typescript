@@ -1,0 +1,10 @@
+{
+  "name": "@devjobs/devjobs-frontend-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@devjobs/devjobs-frontend"
+    ]
+  }
+}

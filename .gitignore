@@ -1,0 +1,41 @@
+# Node.js (applies to root and all subdirectories)
+**/node_modules/
+npm-debug.log
+yarn-error.log
+**/package-lock.json
+**/yarn.lock
+
+# Nx-specific (applies to root and all subdirectories)
+**/dist/
+**/tmp/
+**/.nx/cache/
+**/.nx/workspace-data/
+**/nx.json.bak
+**/nxdeps.json
+
+# TypeScript (applies to root and all subdirectories)
+**/*.tsbuildinfo
+**/build/
+**/coverage/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-*
+*.code-workspace
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Testing (applies to root and all subdirectories)
+**/coverage/
+**/test-results/
+**/playwright-report/
+**/playwright/.cache/
+
+# Miscellaneous (applies to root and all subdirectories)
+**/.env
+**/.env.local
+**/.env.*.local
+**/*.log
