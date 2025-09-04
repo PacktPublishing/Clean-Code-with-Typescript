@@ -1,2 +1,3 @@
-// before commit
-export function sayHello(name:string){console.log("Hello,"+name+"!")}
+export function sayHello(name: string) {
+  console.log('Hello,' + name + '!');
+}
