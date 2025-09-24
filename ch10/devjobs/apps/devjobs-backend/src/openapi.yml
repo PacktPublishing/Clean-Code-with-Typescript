@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: DevJobs API
+  version: 1.0.0
+  description: API for the DevJobs platform
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /users:
+    get:
+      summary: List all users
+      responses:
+        '200':
+          description: Array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '201':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /companies:
+    get:
+      summary: List all companies
+      responses:
+        '200':
+          description: Array of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+
+    post:
+      summary: Create a new company
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompany'
+      responses:
+        '201':
+          description: Created company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+
+  /jobs:
+    get:
+      summary: List all jobs
+      responses:
+        '200':
+          description: Array of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+
+    post:
+      summary: Create a new job posting
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJob'
+      responses:
+        '201':
+          description: Created job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "u123e456-78ab-90cd-ef12-3456789abcde"
+        name:
+          type: string
+          example: Jane Doe
+        email:
+          type: string
+          format: email
+          example: jane@example.com
+        password:
+          type: string
+          format: password
+        role:
+          type: string
+          enum: [jobSeeker, companyUser]
+        companyId:
+          type: string
+          format: uuid
+          description: "Required if role is companyUser"
+      required:
+        - id
+        - name
+        - email
+        - password
+        - role
+
+    CreateUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        role:
+          type: string
+          enum: [jobSeeker, companyUser]
+        companyId:
+          type: string
+          format: uuid
+          description: "Required if role is companyUser"
+      required:
+        - name
+        - email
+        - password
+        - role
+
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "c123e456-78ab-90cd-ef12-3456789abcde"
+        name:
+          type: string
+          example: OpenAI
+        website:
+          type: string
+          example: https://openai.com
+      required:
+        - id
+        - name
+
+    CreateCompany:
+      type: object
+      properties:
+        name:
+          type: string
+        website:
+          type: string
+      required:
+        - name
+
+    Job:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "j987e654-32ba-10dc-fe21-9876543fedcb"
+        title:
+          type: string
+          example: Software Engineer
+        companyId:
+          type: string
+          format: uuid
+          description: "Reference to the company that created this job"
+        location:
+          type: string
+          example: Remote
+        description:
+          type: string
+      required:
+        - id
+        - title
+        - companyId
+        - location
+
+    CreateJob:
+      type: object
+      properties:
+        title:
+          type: string
+        companyId:
+          type: string
+          format: uuid
+        location:
+          type: string
+        description:
+          type: string
+      required:
+        - title
+        - companyId
+        - location
