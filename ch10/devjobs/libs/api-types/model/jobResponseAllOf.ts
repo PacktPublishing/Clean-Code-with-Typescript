@@ -5,6 +5,8 @@
  * API for the DevJobs platform
  * OpenAPI spec version: 1.0.0
  */
-import type { BaseCompany } from './baseCompany';
 
-export type CreateCompany = BaseCompany;
+export type JobResponseAllOf = {
+  id: string;
+  description?: string;
+};

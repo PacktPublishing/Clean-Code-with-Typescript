@@ -12,18 +12,17 @@ import type {
 } from 'axios';
 
 import type {
-  Company,
-  CreateCompany,
+  BaseCompany,
+  CompanyResponse,
   CreateJob,
-  CreateUser,
-  Job,
-  User
+  JobResponse,
+  UserResponse
 } from './model';
 
 /**
  * @summary List all users
  */
-export const getUsers = <TData = AxiosResponse<User[]>>(
+export const getUsers = <TData = AxiosResponse<UserResponse[]>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.default.get(
@@ -34,19 +33,19 @@ export const getUsers = <TData = AxiosResponse<User[]>>(
 /**
  * @summary Register a new user
  */
-export const postUsers = <TData = AxiosResponse<User>>(
-    createUser: CreateUser, options?: AxiosRequestConfig
+export const postUsers = <TData = AxiosResponse<UserResponse>>(
+    postUsersBody: unknown, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.default.post(
       `/users`,
-      createUser,options
+      postUsersBody,options
     );
   }
 
 /**
  * @summary List all companies
  */
-export const getCompanies = <TData = AxiosResponse<Company[]>>(
+export const getCompanies = <TData = AxiosResponse<CompanyResponse[]>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.default.get(
@@ -57,19 +56,19 @@ export const getCompanies = <TData = AxiosResponse<Company[]>>(
 /**
  * @summary Create a new company
  */
-export const postCompanies = <TData = AxiosResponse<Company>>(
-    createCompany: CreateCompany, options?: AxiosRequestConfig
+export const postCompanies = <TData = AxiosResponse<CompanyResponse>>(
+    baseCompany: BaseCompany, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.default.post(
       `/companies`,
-      createCompany,options
+      baseCompany,options
     );
   }
 
 /**
  * @summary List all jobs
  */
-export const getJobs = <TData = AxiosResponse<Job[]>>(
+export const getJobs = <TData = AxiosResponse<JobResponse[]>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.default.get(
@@ -80,7 +79,7 @@ export const getJobs = <TData = AxiosResponse<Job[]>>(
 /**
  * @summary Create a new job posting
  */
-export const postJobs = <TData = AxiosResponse<Job>>(
+export const postJobs = <TData = AxiosResponse<JobResponse>>(
     createJob: CreateJob, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.default.post(
@@ -89,9 +88,9 @@ export const postJobs = <TData = AxiosResponse<Job>>(
     );
   }
 
-export type GetUsersResult = AxiosResponse<User[]>
-export type PostUsersResult = AxiosResponse<User>
-export type GetCompaniesResult = AxiosResponse<Company[]>
-export type PostCompaniesResult = AxiosResponse<Company>
-export type GetJobsResult = AxiosResponse<Job[]>
-export type PostJobsResult = AxiosResponse<Job>
+export type GetUsersResult = AxiosResponse<UserResponse[]>
+export type PostUsersResult = AxiosResponse<UserResponse>
+export type GetCompaniesResult = AxiosResponse<CompanyResponse[]>
+export type PostCompaniesResult = AxiosResponse<CompanyResponse>
+export type GetJobsResult = AxiosResponse<JobResponse[]>
+export type PostJobsResult = AxiosResponse<JobResponse>

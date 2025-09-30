@@ -6,6 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BaseJob } from './baseJob';
-import type { CreateJobAllOf } from './createJobAllOf';
+import type { JobResponseAllOf } from './jobResponseAllOf';
 
-export type CreateJob = BaseJob & CreateJobAllOf;
+export type JobResponse = BaseJob & JobResponseAllOf;

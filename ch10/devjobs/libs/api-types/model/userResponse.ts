@@ -6,6 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BaseUser } from './baseUser';
-import type { CreateUserAllOf } from './createUserAllOf';
+import type { UserResponseAllOf } from './userResponseAllOf';
 
-export type CreateUser = BaseUser & CreateUserAllOf;
+export type UserResponse = BaseUser & UserResponseAllOf;

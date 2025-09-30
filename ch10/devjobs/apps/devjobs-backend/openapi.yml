@@ -20,7 +20,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/UserResponse'  # Use secure response type
 
     post:
       summary: Register a new user
@@ -29,14 +29,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUser'
+              $reg: '#/components/schemas/CreateUser'  # Input with password
       responses:
         '201':
           description: Created user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserResponse'  # No password in response
 
   /companies:
     get:
@@ -49,7 +49,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Company'
+                  $ref: '#/components/schemas/CompanyResponse'
 
     post:
       summary: Create a new company
@@ -65,7 +65,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Company'
+                $ref: '#/components/schemas/CompanyResponse'
 
   /jobs:
     get:
@@ -78,7 +78,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Job'
+                  $ref: '#/components/schemas/JobResponse'
 
     post:
       summary: Create a new job posting
@@ -94,17 +94,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobResponse'
 
 components:
   schemas:
-    User:
+    # Enums (reusable)
+    UserRole:
+      type: string
+      enum: [jobSeeker, companyUser]
+      description: User role
+
+    # Base for User (common fields)
+    BaseUser:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: "u123e456-78ab-90cd-ef12-3456789abcde"
         name:
           type: string
           example: Jane Doe
@@ -112,54 +115,49 @@ components:
           type: string
           format: email
           example: jane@example.com
-        password:
-          type: string
-          format: password
         role:
-          type: string
-          enum: [jobSeeker, companyUser]
+          $ref: '#/components/schemas/UserRole'
         companyId:
           type: string
           format: uuid
           description: "Required if role is companyUser"
       required:
-        - id
         - name
         - email
-        - password
         - role
 
+    # Input: Extends base + password
     CreateUser:
       type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-          format: password
-        role:
-          type: string
-          enum: [jobSeeker, companyUser]
-        companyId:
-          type: string
-          format: uuid
-          description: "Required if role is companyUser"
-      required:
-        - name
-        - email
-        - password
-        - role
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+        - type: object
+          properties:
+            password:
+              type: string
+              format: password
+              writeOnly: true  # OpenAPI hint: don't include in responses
+          required:
+            - password
 
-    Company:
+    # Output: Extends base + id (no password)
+    UserResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "u123e456-78ab-90cd-ef12-3456789abcde"
+          required:
+            - id
+
+    # Base for Company
+    BaseCompany:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: "c123e456-78ab-90cd-ef12-3456789abcde"
         name:
           type: string
           example: OpenAI
@@ -167,26 +165,29 @@ components:
           type: string
           example: https://openai.com
       required:
-        - id
         - name
 
+    # Input/Output for Company (simple; could merge if no diffs)
     CreateCompany:
-      type: object
-      properties:
-        name:
-          type: string
-        website:
-          type: string
-      required:
-        - name
+      $ref: '#/components/schemas/BaseCompany'  # Reuse base
 
-    Job:
+    CompanyResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseCompany'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "c123e456-78ab-90cd-ef12-3456789abcde"
+          required:
+            - id
+
+    # Base for Job
+    BaseJob:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: "j987e654-32ba-10dc-fe21-9876543fedcb"
         title:
           type: string
           example: Software Engineer
@@ -200,24 +201,32 @@ components:
         description:
           type: string
       required:
-        - id
         - title
         - companyId
         - location
 
+    # Input: Extends base (add description if optional)
     CreateJob:
       type: object
-      properties:
-        title:
-          type: string
-        companyId:
-          type: string
-          format: uuid
-        location:
-          type: string
-        description:
-          type: string
-      required:
-        - title
-        - companyId
-        - location
+      allOf:
+        - $ref: '#/components/schemas/BaseJob'
+        - type: object
+          properties:
+            description:
+              type: string
+
+    # Output: Extends base + id
+    JobResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseJob'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "j987e654-32ba-10dc-fe21-9876543fedcb"
+            description:
+              type: string
+          required:
+            - id

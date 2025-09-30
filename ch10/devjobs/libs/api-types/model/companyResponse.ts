@@ -6,5 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BaseCompany } from './baseCompany';
+import type { CompanyResponseAllOf } from './companyResponseAllOf';
 
-export type CreateCompany = BaseCompany;
+export type CompanyResponse = BaseCompany & CompanyResponseAllOf;
