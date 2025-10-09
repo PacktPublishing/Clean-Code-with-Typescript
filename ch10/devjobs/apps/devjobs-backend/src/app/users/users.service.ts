@@ -29,4 +29,8 @@ export class UsersService {
 
     return userWithoutPassword;
   }
+
+  findByEmail(email: string): User | undefined {
+    return this.users.find((user) => user.email === email);
+  }
 }

@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "devjobs-backend",
+  "name": "devjobs-api-collection",
   "type": "collection",
   "ignore": [
     "node_modules",
