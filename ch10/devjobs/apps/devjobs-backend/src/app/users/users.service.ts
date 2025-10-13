@@ -6,10 +6,15 @@ import {
   UserResponse,
 } from "../../../../../libs/api-types/model";
 import * as bcrypt from "bcrypt";
+import { FileStorage } from "../common/file-storage";
 
 @Injectable()
 export class UsersService {
-  private users: User[] = []; // Now using internal type for secure storage
+  private storage = new FileStorage<any>("users.json");
+
+  constructor() {}
+
+  private users: User[] = this.storage.read();
 
   async register(user: CreateUser): Promise<UserResponse> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -24,6 +29,7 @@ export class UsersService {
     };
 
     this.users.push(newUser);
+    this.storage.write(this.users);
 
     const { password, ...userWithoutPassword } = newUser;
 
@@ -31,6 +37,7 @@ export class UsersService {
   }
 
   findByEmail(email: string): User | undefined {
-    return this.users.find((user) => user.email === email);
+    const users = this.storage.read();
+    return users.find((user) => user.email === email);
   }
 }
