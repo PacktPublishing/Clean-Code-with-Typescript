@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $reg: '#/components/schemas/CreateUser'  # Input with password
+              $ref: '#/components/schemas/CreateUser'  # Input with password
       responses:
         '201':
           description: Created user

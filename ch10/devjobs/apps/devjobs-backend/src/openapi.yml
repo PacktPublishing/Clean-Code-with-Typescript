@@ -11,6 +11,8 @@ servers:
 paths:
   /users:
     get:
+      tags:
+        - users
       summary: List all users
       responses:
         '200':
@@ -23,13 +25,15 @@ paths:
                   $ref: '#/components/schemas/UserResponse'  # Use secure response type
 
     post:
+      tags:
+        - users
       summary: Register a new user
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $reg: '#/components/schemas/CreateUser'  # Input with password
+              $ref: '#/components/schemas/CreateUser'  # Input with password
       responses:
         '201':
           description: Created user
@@ -40,6 +44,8 @@ paths:
 
   /companies:
     get:
+      tags:
+        - companies
       summary: List all companies
       responses:
         '200':
@@ -52,6 +58,8 @@ paths:
                   $ref: '#/components/schemas/CompanyResponse'
 
     post:
+      tags:
+        - companies
       summary: Create a new company
       requestBody:
         required: true
@@ -69,6 +77,8 @@ paths:
 
   /jobs:
     get:
+      tags:
+        - jobs
       summary: List all jobs
       responses:
         '200':
@@ -81,6 +91,8 @@ paths:
                   $ref: '#/components/schemas/JobResponse'
 
     post:
+      tags:
+        - jobs
       summary: Create a new job posting
       requestBody:
         required: true
@@ -226,7 +238,4 @@ components:
               type: string
               format: uuid
               example: "j987e654-32ba-10dc-fe21-9876543fedcb"
-            description:
-              type: string
-          required:
-            - id
+           
