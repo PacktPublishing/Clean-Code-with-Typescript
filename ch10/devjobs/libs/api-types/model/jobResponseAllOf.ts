@@ -7,5 +7,5 @@
  */
 
 export type JobResponseAllOf = {
-  id?: string;
+  id: string;
 };

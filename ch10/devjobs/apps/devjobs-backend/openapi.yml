@@ -13,15 +13,14 @@ paths:
     get:
       summary: List all users
       responses:
-        '200':
+        "200":
           description: Array of users
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserResponse'  # Use secure response type
-
+                  $ref: "#/components/schemas/UserResponse"
     post:
       summary: Register a new user
       requestBody:
@@ -29,28 +28,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUser'  # Input with password
+              $ref: "#/components/schemas/CreateUser"
       responses:
-        '201':
+        "201":
           description: Created user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'  # No password in response
+                $ref: "#/components/schemas/UserResponse"
 
   /companies:
     get:
       summary: List all companies
       responses:
-        '200':
+        "200":
           description: Array of companies
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CompanyResponse'
-
+                  $ref: "#/components/schemas/CompanyResponse"
     post:
       summary: Create a new company
       requestBody:
@@ -58,28 +56,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateCompany'
+              $ref: "#/components/schemas/CreateCompany"
       responses:
-        '201':
+        "201":
           description: Created company
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CompanyResponse'
+                $ref: "#/components/schemas/CompanyResponse"
 
   /jobs:
     get:
       summary: List all jobs
       responses:
-        '200':
+        "200":
           description: Array of jobs
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/JobResponse'
-
+                  $ref: "#/components/schemas/JobResponse"
     post:
       summary: Create a new job posting
       requestBody:
@@ -87,146 +84,161 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateJob'
+              $ref: "#/components/schemas/CreateJob"
       responses:
-        '201':
+        "201":
           description: Created job
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobResponse'
+                $ref: "#/components/schemas/JobResponse"
+
+  /auth/login:
+    post:
+      summary: Log in and return a JWT access token
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
-    # Enums (reusable)
+
     UserRole:
       type: string
       enum: [jobSeeker, companyUser]
-      description: User role
 
-    # Base for User (common fields)
     BaseUser:
       type: object
       properties:
         name:
           type: string
-          example: Jane Doe
         email:
           type: string
           format: email
-          example: jane@example.com
         role:
-          $ref: '#/components/schemas/UserRole'
+          $ref: "#/components/schemas/UserRole"
         companyId:
           type: string
           format: uuid
-          description: "Required if role is companyUser"
-      required:
-        - name
-        - email
-        - role
+      required: [name, email, role]
 
-    # Input: Extends base + password
     CreateUser:
-      type: object
       allOf:
-        - $ref: '#/components/schemas/BaseUser'
+        - $ref: "#/components/schemas/BaseUser"
         - type: object
           properties:
             password:
               type: string
               format: password
-              writeOnly: true  # OpenAPI hint: don't include in responses
-          required:
-            - password
+          required: [password]
 
-    # Output: Extends base + id (no password)
     UserResponse:
-      type: object
       allOf:
-        - $ref: '#/components/schemas/BaseUser'
+        - $ref: "#/components/schemas/BaseUser"
         - type: object
           properties:
             id:
               type: string
               format: uuid
-              example: "u123e456-78ab-90cd-ef12-3456789abcde"
-          required:
-            - id
+          required: [id]
 
-    # Base for Company
     BaseCompany:
       type: object
       properties:
         name:
           type: string
-          example: OpenAI
         website:
           type: string
-          example: https://openai.com
-      required:
-        - name
+      required: [name]
 
-    # Input/Output for Company (simple; could merge if no diffs)
     CreateCompany:
-      $ref: '#/components/schemas/BaseCompany'  # Reuse base
+      $ref: "#/components/schemas/BaseCompany"
 
     CompanyResponse:
-      type: object
       allOf:
-        - $ref: '#/components/schemas/BaseCompany'
+        - $ref: "#/components/schemas/BaseCompany"
         - type: object
           properties:
             id:
               type: string
               format: uuid
-              example: "c123e456-78ab-90cd-ef12-3456789abcde"
-          required:
-            - id
+          required: [id]
 
-    # Base for Job
     BaseJob:
       type: object
       properties:
         title:
           type: string
-          example: Software Engineer
         companyId:
           type: string
           format: uuid
-          description: "Reference to the company that created this job"
         location:
           type: string
-          example: Remote
         description:
           type: string
-      required:
-        - title
-        - companyId
-        - location
+      required: [title, companyId, location]
 
-    # Input: Extends base (add description if optional)
     CreateJob:
-      type: object
       allOf:
-        - $ref: '#/components/schemas/BaseJob'
-        - type: object
-          properties:
-            description:
-              type: string
+        - $ref: "#/components/schemas/BaseJob"
 
-    # Output: Extends base + id
     JobResponse:
-      type: object
       allOf:
-        - $ref: '#/components/schemas/BaseJob'
+        - $ref: "#/components/schemas/BaseJob"
         - type: object
           properties:
             id:
               type: string
               format: uuid
-              example: "j987e654-32ba-10dc-fe21-9876543fedcb"
-            description:
-              type: string
-          required:
-            - id
+          required: [id]
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+      required: [email, password]
+
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+      required: [access_token]
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+      required: [statusCode, message]

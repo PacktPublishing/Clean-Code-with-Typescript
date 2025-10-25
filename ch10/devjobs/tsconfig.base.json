@@ -16,6 +16,15 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@ch10/devjobs/source"]
+    "customConditions": ["@ch10/devjobs/source"],
+    "baseUrl": ".",
+    "paths": {
+      "@devjobs/api-client": ["libs/api-client/index.ts"],
+      "@devjobs/api-client/*": ["libs/api-client/src/*"]
+    },
+    "references": [
+      { "path": "./libs/api-client" }, // Reference the lib project
+      { "path": "./apps/devjobs-frontend" }
+    ]
   }
 }

@@ -11,6 +11,5 @@ export interface BaseUser {
   name: string;
   email: string;
   role: UserRole;
-  /** Required if role is companyUser */
   companyId?: string;
 }

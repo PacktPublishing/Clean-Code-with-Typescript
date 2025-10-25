@@ -8,7 +8,6 @@
 
 export interface BaseJob {
   title: string;
-  /** Reference to the company that created this job */
   companyId: string;
   location: string;
   description?: string;

@@ -5,6 +5,7 @@
  * API for the DevJobs platform
  * OpenAPI spec version: 1.0.0
  */
-import type { BaseJob } from './baseJob';
 
-export type CreateJob = BaseJob;
+export interface LoginResponse {
+  access_token: string;
+}
