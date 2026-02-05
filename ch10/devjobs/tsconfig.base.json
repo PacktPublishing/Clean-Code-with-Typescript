@@ -21,10 +21,10 @@
     "paths": {
       "@devjobs/api-client": ["libs/api-client/index.ts"],
       "@devjobs/api-client/*": ["libs/api-client/src/*"]
-    },
-    "references": [
-      { "path": "./libs/api-client" }, // Reference the lib project
-      { "path": "./apps/devjobs-frontend" }
-    ]
-  }
+    }
+  },
+  "references": [
+    { "path": "./libs/api-client" }, // Reference the lib project
+    { "path": "./apps/devjobs-frontend" }
+  ]
 }
