@@ -29,7 +29,7 @@ export const postAuthLogin = (
   loginRequest: LoginRequest,
   options?: AxiosRequestConfig
 ): Promise<AxiosResponse<LoginResponse>> => {
-  return axios.default.post(`/auth/login`, loginRequest, options);
+  return axios.default.post(`api/auth/login`, loginRequest, options);
 };
 
 export const getPostAuthLoginMutationOptions = <
