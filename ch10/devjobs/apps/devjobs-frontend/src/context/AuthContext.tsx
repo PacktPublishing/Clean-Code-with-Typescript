@@ -30,16 +30,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     null,
   );
 
-  const login = (newToken: string) => {
+  const login = useCallback((newToken: string) => {
     localStorage.setItem('access_token', newToken);
     setToken(newToken);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('access_token');
     setToken(null);
     setUser(null);
-  };
+  }, []);
 
   // Load token from localStorage on mount
   useEffect(() => {
