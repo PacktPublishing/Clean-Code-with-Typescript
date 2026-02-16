@@ -22,8 +22,9 @@ export function Login() {
         data: { email, password },
       });
 
-      login(response.data.access_token);
-      
+   
+      login(response.access_token);
+
        navigate('/jobs');
     } catch (error) {
         // you can use your custom loggers here to handle the error in a better way
