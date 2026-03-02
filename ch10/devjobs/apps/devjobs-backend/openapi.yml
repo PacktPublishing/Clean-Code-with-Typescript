@@ -1,0 +1,244 @@
+openapi: 3.0.3
+info:
+  title: DevJobs API
+  version: 1.0.0
+  description: API for the DevJobs platform
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /users:
+    get:
+      summary: List all users
+      responses:
+        "200":
+          description: Array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserResponse"
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+      responses:
+        "201":
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /companies:
+    get:
+      summary: List all companies
+      responses:
+        "200":
+          description: Array of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CompanyResponse"
+    post:
+      summary: Create a new company
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCompany"
+      responses:
+        "201":
+          description: Created company
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyResponse"
+
+  /jobs:
+    get:
+      summary: List all jobs
+      responses:
+        "200":
+          description: Array of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobResponse"
+    post:
+      summary: Create a new job posting
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateJob"
+      responses:
+        "201":
+          description: Created job
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobResponse"
+
+  /auth/login:
+    post:
+      summary: Log in and return a JWT access token
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+
+    UserRole:
+      type: string
+      enum: [jobSeeker, companyUser]
+
+    BaseUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          $ref: "#/components/schemas/UserRole"
+        companyId:
+          type: string
+          format: uuid
+      required: [name, email, role]
+
+    CreateUser:
+      allOf:
+        - $ref: "#/components/schemas/BaseUser"
+        - type: object
+          properties:
+            password:
+              type: string
+              format: password
+          required: [password]
+
+    UserResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseUser"
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+          required: [id]
+
+    BaseCompany:
+      type: object
+      properties:
+        name:
+          type: string
+        website:
+          type: string
+      required: [name]
+
+    CreateCompany:
+      $ref: "#/components/schemas/BaseCompany"
+
+    CompanyResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseCompany"
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+          required: [id]
+
+    BaseJob:
+      type: object
+      properties:
+        title:
+          type: string
+        companyId:
+          type: string
+          format: uuid
+        location:
+          type: string
+        description:
+          type: string
+      required: [title, companyId, location]
+
+    CreateJob:
+      allOf:
+        - $ref: "#/components/schemas/BaseJob"
+
+    JobResponse:
+      allOf:
+        - $ref: "#/components/schemas/BaseJob"
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+          required: [id]
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+      required: [email, password]
+
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+      required: [access_token]
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+      required: [statusCode, message]

@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/devjobs-backend-e2e"
+    },
+    {
+      "path": "./apps/devjobs-backend"
+    },
+    {
+      "path": "./apps/devjobs-frontend-e2e"
+    },
+    {
+      "path": "./apps/devjobs-frontend"
+    }
+  ]
+}

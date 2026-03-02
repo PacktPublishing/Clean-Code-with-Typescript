@@ -1,0 +1,26 @@
+[
+  {
+    "id": "d995f5de-6463-4fe0-840c-855ccd4f7329",
+    "name": "Test User 2",
+    "email": "test@example.com",
+    "role": "user",
+    "companyId": "demo-company",
+    "password": "$2b$10$x2g7y37IDwDi9CdcBzAndedi0iKPzf4VeaMveTCCv4DPP/FNH8uam"
+  },
+  {
+    "id": "dd22d7c3-40bc-4be3-bb92-00c16686f569",
+    "name": "Test User 3",
+    "email": "rukeeojigbo@gmail.com",
+    "role": "user",
+    "companyId": "Linkedin",
+    "password": "$2b$10$qNoaPUbWdM8ViH7XGzVpBetBzNUaNXGm1pu0dez.YpFBYKk7hSmWC"
+  },
+  {
+    "id": "2201fe9c-17b5-4703-94d1-71dc4b5e3111",
+    "name": "Jane Doe Recruiter",
+    "email": "janedoe@devjobs.com",
+    "role": "company",
+    "companyId": "ffdba55c-78c2-44e3-9665-44d0582c1051",
+    "password": "$2b$10$QXMhB1ED6z4V.eENczqPk.VUcTQaKSg0QHy/UrWue2ldwPUf0elZe"
+  }
+]
