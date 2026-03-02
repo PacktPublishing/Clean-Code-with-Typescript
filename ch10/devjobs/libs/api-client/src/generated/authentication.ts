@@ -34,8 +34,8 @@ export const postAuthLogin = (
     loginRequest: LoginRequest,
  signal?: AbortSignal
 ) => {
-      
-      
+
+
       return api<LoginResponse>(
       {url: `/auth/login`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
@@ -43,7 +43,7 @@ export const postAuthLogin = (
     },
       );
     }
-  
+
 
 
 export const getPostAuthLoginMutationOptions = <TError = ErrorResponse,
@@ -57,7 +57,7 @@ const {mutation: mutationOptions} = options ?
       : {...options, mutation: {...options.mutation, mutationKey}}
       : {mutation: { mutationKey, }};
 
-      
+
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthLogin>>, {data: LoginRequest}> = (props) => {
@@ -66,7 +66,7 @@ const {mutation: mutationOptions} = options ?
           return  postAuthLogin(data,)
         }
 
-        
+
 
 
   return  { mutationFn, ...mutationOptions }}
@@ -91,4 +91,3 @@ export const usePostAuthLogin = <TError = ErrorResponse,
 
       return useMutation(mutationOptions, queryClient);
     }
-    

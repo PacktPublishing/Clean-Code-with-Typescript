@@ -12,7 +12,6 @@ export function Login() {
 
   const { login } = useAuth();
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
@@ -22,13 +21,12 @@ export function Login() {
         data: { email, password },
       });
 
-   
       login(response.access_token);
 
-       navigate('/jobs');
+      navigate('/jobs');
     } catch (error) {
-        // you can use your custom loggers here to handle the error in a better way
-        console.error('Login failed:', error); //
+      // you can use your custom loggers here to handle the error in a better way
+      console.error('Login failed:', error); //
     }
   };
 
@@ -60,9 +58,8 @@ export function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
-          <button type='submit' className='w-full border py-2 rounded'>
-            Login
+          <button type='submit' disabled={loginMutation.isPending}>
+            {loginMutation.isPending ? 'Logging in...' : 'Login'}
           </button>
           {loginMutation.isError && (
             <p className='text-sm'>
