@@ -61,7 +61,7 @@
     "jest-environment-node": "^30.0.2",
     "jest-util": "^30.0.2",
     "jiti": "2.4.2",
-    "jsdom": "~22.1.0",
+    "jsdom": "~28.1.0",
     "nx": "21.5.3",
     "orval": "^7.12.2",
     "postcss": "8.4.38",
