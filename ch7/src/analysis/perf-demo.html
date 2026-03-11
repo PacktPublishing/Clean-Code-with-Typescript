@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DevTools Performance Demo</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+      }
+      button {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        margin: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Chrome DevTools Performance Demo</h1>
+    <button id="slow">Run Very Slow Code (~5 sec block)</button>
+    <button id="fast">Run Fast Code</button>
+
+    <script>
+      function wasteCpuTime() {
+        const start = performance.now();
+        while (performance.now() - start < 5000) {}
+        console.log("Done wasting 5 seconds");
+      }
+
+      document.getElementById("slow").onclick = wasteCpuTime;
+      document.getElementById("fast").onclick = () => console.log("Instant!");
+    </script>
+  </body>
+</html>
