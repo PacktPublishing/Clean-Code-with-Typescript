@@ -1,0 +1,4 @@
+{
+  "theme": "default",
+  "exclude": ["node_modules/**"]
+}

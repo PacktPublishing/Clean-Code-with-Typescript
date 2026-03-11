@@ -1,0 +1,15 @@
+{
+  "name": "ch2-writing-clean-functions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chapter 2 examples extracted from the Clean Code with TypeScript manuscript.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "docs": "typedoc ./index.ts"
+  },
+  "devDependencies": {
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3"
+  }
+}
