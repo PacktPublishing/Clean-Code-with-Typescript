@@ -1,0 +1,13 @@
+{
+  "name": "ch8-design-patterns",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chapter 8 examples extracted from the Clean Code with TypeScript manuscript.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
