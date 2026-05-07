@@ -62,7 +62,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "axios": "^1.6.0",
+    "axios": "^1.15.2",
     "express": "^4.21.2",
     "next": "~15.2.4",
     "react": "19.0.0",
