@@ -85,7 +85,7 @@
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
     "jwt-decode": "^4.0.0",
-    "next": "~15.2.4",
+    "next": "~15.5.18",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "react": "19.0.0",
